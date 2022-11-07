@@ -1,6 +1,16 @@
-//Fernando Perez Zavala, Jacob Navarro 
-//Autonomous Car Project
 
+//Fernando Perez Zavala, Jacob Navarro 
+//Lab 8: Psuedo Code
+
+// Sensors to implement: Ultrasonic Sensor, Tracking sensor, 
+
+#include <NewPing.h>
+
+#define TRIGGER_PIN 4
+#define ECHO_PIN 5
+#define MAX_DISTANCE 400
+
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 #define PWM_A_Pin 3 // PWM A
 #define DIR_A_Pin 2 // DIR A
@@ -29,11 +39,15 @@ void setup() {
   pinMode(DIR_B_Pin, OUTPUT); //Initiates Motor Channel B pin
   pinMode(trackingPin1, INPUT); // set trackingPin1 as INPUT
   pinMode(trackingPin2, INPUT);  //set trackingPin2 as INPUT
-  Serial.begin(9600);
+
+
+  Serial.begin(115200);
   
 }
 
 void loop() {
+/*
+
 
   boolean val1 = digitalRead(trackingPin1); // Left Motor
   boolean val2 = digitalRead(trackingPin2); // Right Motor
@@ -72,6 +86,11 @@ void loop() {
   {
    stopMotion(); // Stopping both wheels
   }
+
+  */
+
+  goStraight(forwardA,125);
+  //motionA(forwardA, 255);
 }
 
 void motionA(int directionA, int speedA){
