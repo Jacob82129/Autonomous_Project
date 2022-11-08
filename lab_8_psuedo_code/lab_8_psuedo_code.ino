@@ -12,8 +12,8 @@
 
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
-#define PWM_A_Pin 3 // PWM A
-#define DIR_A_Pin 2 // DIR A
+#define PWM_A_Pin 9 // PWM A
+#define DIR_A_Pin 8 // DIR A
 
 #define PWM_B_Pin 11 // PWM B
 #define DIR_B_Pin 4 // DIR B
@@ -46,8 +46,9 @@ void setup() {
 }
 
 void loop() {
-/*
 
+
+/*
 
   boolean val1 = digitalRead(trackingPin1); // Left Motor
   boolean val2 = digitalRead(trackingPin2); // Right Motor
@@ -56,7 +57,7 @@ void loop() {
   {
     if(val2 == HIGH) // Both wheels go forward full speed
     {
-      goStraight(forwardA, 255);
+      goStraight(forwardA, 150);
       Serial.print("Going Straight!");
     }
     else if(val2 == LOW) // Right Motor Off Track: Turning left
@@ -81,7 +82,6 @@ void loop() {
       Serial.print("Stopping");
     }
   }
-
   else
   {
    stopMotion(); // Stopping both wheels
@@ -89,8 +89,15 @@ void loop() {
 
   */
 
-  goStraight(forwardA,125);
+  //goStraight(forwardA,150);
   //motionA(forwardA, 255);
+  motionB(forwardB, 255);
+  //turnLeft();
+
+  //delay(2000);
+
+  //turnRight();
+
 }
 
 void motionA(int directionA, int speedA){
@@ -121,15 +128,15 @@ void goStraight(int direction1, int speed1)
 
 void turnLeft()
 {
-  motionA(forwardA, 123); // motorA left wheel goes half speed
-  motionB(forwardB, 255); // motorB right wheel goes full speed to initiate left turn
+  motionA(forwardA, 62); // motorA left wheel goes half speed
+  motionB(forwardB, 123); // motorB right wheel goes full speed to initiate left turn
   
 }
 
 void turnRight()
 {
-  motionA(forwardA, 255); // motorA left wheel goes full speed to initiate right turn
-  motionB(forwardB, 123); // motorB right wheel goes half speed
+  motionA(forwardA, 123); // motorA left wheel goes full speed to initiate right turn
+  motionB(forwardB, 62); // motorB right wheel goes half speed
 
 }
 
