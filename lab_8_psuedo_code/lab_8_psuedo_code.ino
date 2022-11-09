@@ -41,14 +41,14 @@ void setup() {
   pinMode(trackingPin2, INPUT);  //set trackingPin2 as INPUT
 
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   
 }
 
 void loop() {
 
 
-/*
+
 
   boolean val1 = digitalRead(trackingPin1); // Left Motor
   boolean val2 = digitalRead(trackingPin2); // Right Motor
@@ -59,11 +59,13 @@ void loop() {
     {
       goStraight(forwardA, 150);
       Serial.print("Going Straight!");
+      Serial.print('\n');
     }
     else if(val2 == LOW) // Right Motor Off Track: Turning left
     {
       turnLeft();
       Serial.print("Turning Left");
+      Serial.print('\n');
     }   
   }
   else if(val2 == HIGH) 
@@ -72,6 +74,7 @@ void loop() {
     {
       turnRight();
       Serial.print("Turning Right");  
+      Serial.print('\n');
     }
   }
   else if(val1 == LOW)
@@ -80,6 +83,7 @@ void loop() {
     {
       stopMotion();
       Serial.print("Stopping");
+      Serial.print('\n');
     }
   }
   else
@@ -87,11 +91,11 @@ void loop() {
    stopMotion(); // Stopping both wheels
   }
 
-  */
+  
 
   //goStraight(forwardA,150);
   //motionA(forwardA, 255);
-  motionB(forwardB, 255);
+  //motionB(forwardB, 255);
   //turnLeft();
 
   //delay(2000);
@@ -128,15 +132,15 @@ void goStraight(int direction1, int speed1)
 
 void turnLeft()
 {
-  motionA(forwardA, 62); // motorA left wheel goes half speed
-  motionB(forwardB, 123); // motorB right wheel goes full speed to initiate left turn
+  motionA(forwardA, 70); // motorA left wheel goes half speed
+  motionB(forwardB, 150); // motorB right wheel goes full speed to initiate left turn
   
 }
 
 void turnRight()
 {
-  motionA(forwardA, 123); // motorA left wheel goes full speed to initiate right turn
-  motionB(forwardB, 62); // motorB right wheel goes half speed
+  motionA(forwardA, 150); // motorA left wheel goes full speed to initiate right turn
+  motionB(forwardB, 70); // motorB right wheel goes half speed
 
 }
 
