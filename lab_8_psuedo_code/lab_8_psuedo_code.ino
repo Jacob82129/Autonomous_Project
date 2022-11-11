@@ -132,15 +132,15 @@ void goStraight(int direction1, int speed1)
 
 void turnLeft()
 {
-  motionA(forwardA, 70); // motorA left wheel goes half speed
-  motionB(forwardB, 150); // motorB right wheel goes full speed to initiate left turn
+  motionA(forwardA, 90); // motorA left wheel goes half speed
+  motionB(forwardB, 180); // motorB right wheel goes full speed to initiate left turn
   
 }
 
 void turnRight()
 {
-  motionA(forwardA, 150); // motorA left wheel goes full speed to initiate right turn
-  motionB(forwardB, 70); // motorB right wheel goes half speed
+  motionA(forwardA, 180); // motorA left wheel goes full speed to initiate right turn
+  motionB(forwardB, 90); // motorB right wheel goes half speed
 
 }
 
