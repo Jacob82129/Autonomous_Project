@@ -53,33 +53,33 @@ void loop() {
   boolean val1 = digitalRead(trackingPin1); // Left Motor
   boolean val2 = digitalRead(trackingPin2); // Right Motor
   
-  if(val1 == LOW)
+  if(val1 == HIGH)
   {
-    if(val2 == LOW) // Both wheels go forward full speed
+    if(val2 == HIGH) // Both wheels go forward full speed
     {
-      goStraight(forwardA, 150);
+      goStraight(forwardA, 200);
       Serial.print("Going Straight!");
       Serial.print('\n');
     }
-    else if(val2 == HIGH) // Right Motor Off Track: Turning left
+    else if(val2 == LOW) // Right Motor Off Track: Turning left
     {
       turnLeft();
       Serial.print("Turning Left");
       Serial.print('\n');
     }   
   }
-  else if(val2 == LOW) 
+  else if(val2 == HIGH) 
   {
-    if(val1 == HIGH) // Left Motor Off Track: Turning Right
+    if(val1 == LOW) // Left Motor Off Track: Turning Right
     {
       turnRight();
       Serial.print("Turning Right");  
       Serial.print('\n');
     }
   }
-  else if(val1 == HIGH)
+  else if(val1 == LOW)
   {
-    if(val2 == HIGH) // Stopping both wheels
+    if(val2 == LOW) // Stopping both wheels
     {
       stopMotion();
       Serial.print("Stopping");
