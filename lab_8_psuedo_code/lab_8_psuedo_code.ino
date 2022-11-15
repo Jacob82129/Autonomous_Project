@@ -6,17 +6,23 @@
 
 #include <NewPing.h>
 
-#define TRIGGER_PIN 4
-#define ECHO_PIN 5
-#define MAX_DISTANCE 400
+//#define TRIGGER_PIN 4
+//#define ECHO_PIN 5
+//#define MAX_DISTANCE 400
 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
+//NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 #define PWM_A_Pin 9 // PWM A
 #define DIR_A_Pin 8 // DIR A
 
 #define PWM_B_Pin 11 // PWM B
 #define DIR_B_Pin 4 // DIR B
+
+#define s0 2        //Module pins wiring
+#define s1 3
+#define s2 6
+#define s3 7
+#define out 12
 
 const int trackingPin1 = 7;
 const int trackingPin2 = 8; 
@@ -30,7 +36,7 @@ const bool backwardA = LOW; // to indicate LOW as a backward motion for motor A
 const bool forwardB = HIGH; // to indicate HIGH as a forward motion for motor B
 const bool backwardB = LOW; // to indicate HIGH as a backward motion for motor B
 
-
+int red = 0, blue = 0, green = 0; // RGB values
 
 void setup() {
   
@@ -40,9 +46,17 @@ void setup() {
   pinMode(trackingPin1, INPUT); // set trackingPin1 as INPUT
   pinMode(trackingPin2, INPUT);  //set trackingPin2 as INPUT
 
+  pinMode(s0,OUTPUT);    //pin modes
+  pinMode(s1,OUTPUT);
+  pinMode(s2,OUTPUT);
+  pinMode(s3,OUTPUT);
+  pinMode(out,INPUT);
+
 
   Serial.begin(9600);
-  
+
+  digitalWrite(s0,HIGH); //Putting S0/S1 on HIGH/HIGH levels means the output frequency scalling is at 100% (recommended)
+  digitalWrite(s1,HIGH); //LOW/LOW is off HIGH/LOW is 20% and LOW/HIGH is  2%
 }
 
 void loop() {
@@ -91,6 +105,30 @@ void loop() {
    stopMotion(); // Stopping both wheels
   }
 
+  GetColors();
+
+  if (red <=15 && green <=15 && blue <=15){         //If the values are low it's likely the white color (all the colors are present)
+      Serial.println("White");                    
+  }
+  else if (red<blue && red<=green && red<23){      //if Red value is the lowest one and smaller thant 23 it's likely Red
+      Serial.println("Red");
+      stopMotion();
+      Serial.print("Stopping");
+      Serial.print('\n');
+      delay(2000);
+      goStraight(forwardA, 150);
+  }
+  else if (blue<green && blue<red && blue<20){    //Same thing for Blue
+      Serial.println("Blue");
+  }
+  else if (green<red && green-blue<= 8){           
+      Serial.println("Green");                    
+  }
+  else{
+     Serial.println("Unknown");                  //if the color is not recognized, you can add as many as you want
+  }
+
+  delay(2000);                                   //2s delay you can modify if you want
   
 
   //goStraight(forwardA,150);
@@ -153,4 +191,18 @@ void stopMotion()
     //analogWrite(PWM_A_Pin, speedA);
    
     //analogWrite(PWM_B_Pin, speedB);
+}
+
+void GetColors()  
+{    
+  digitalWrite(s2, LOW);                                           //S2/S3 levels define which set of photodiodes we are using LOW/LOW is for RED LOW/HIGH is for Blue and HIGH/HIGH is for green 
+  digitalWrite(s3, LOW);                                           
+  red = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);       //here we wait until "out" go LOW, we start measuring the duration and stops when "out" is HIGH again, if you have trouble with this expression check the bottom of the code
+  delay(20);  
+  digitalWrite(s3, HIGH);                                         //Here we select the other color (set of photodiodes) and measure the other colors value using the same techinque
+  blue = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);
+  delay(20);  
+  digitalWrite(s2, HIGH);  
+  green = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);
+  delay(20);  
 }
