@@ -1,6 +1,6 @@
 
 //Jacob Navarro, Fernando Perez Zavala 
-//CSE 5410: Autonomous Car
+//CSE 5410: Autonomous Car Project
 
 // Sensors to implement: Color Sensor, Tracking sensor, 
 
