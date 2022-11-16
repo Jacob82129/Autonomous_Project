@@ -21,7 +21,7 @@
 #define s0 2        //Module pins wiring
 #define s1 3
 #define s2 6
-#define s3 7
+#define s3 9
 #define out 12
 
 const int trackingPin1 = 7;
@@ -67,33 +67,33 @@ void loop() {
   boolean val1 = digitalRead(trackingPin1); // Left Motor
   boolean val2 = digitalRead(trackingPin2); // Right Motor
   
-  if(val1 == HIGH)
+  if(val1 == LOW)
   {
-    if(val2 == HIGH) // Both wheels go forward full speed
+    if(val2 == LOW) // Both wheels go forward full speed
     {
-      goStraight(forwardA, 200);
+      goStraight(forwardA, 230);
       Serial.print("Going Straight!");
       Serial.print('\n');
     }
-    else if(val2 == LOW) // Right Motor Off Track: Turning left
+    else if(val2 == HIGH) // Right Motor Off Track: Turning left
     {
       turnLeft();
       Serial.print("Turning Left");
       Serial.print('\n');
     }   
   }
-  else if(val2 == HIGH) 
+  else if(val2 == LOW) 
   {
-    if(val1 == LOW) // Left Motor Off Track: Turning Right
+    if(val1 == HIGH) // Left Motor Off Track: Turning Right
     {
       turnRight();
       Serial.print("Turning Right");  
       Serial.print('\n');
     }
   }
-  else if(val1 == LOW)
+  else if(val1 == HIGH)
   {
-    if(val2 == LOW) // Stopping both wheels
+    if(val2 == HIGH) // Stopping both wheels
     {
       stopMotion();
       Serial.print("Stopping");
@@ -128,7 +128,7 @@ void loop() {
      Serial.println("Unknown");                  //if the color is not recognized, you can add as many as you want
   }
 
-  delay(2000);                                   //2s delay you can modify if you want
+  //delay(2000);                                   //2s delay you can modify if you want
   
 
   //goStraight(forwardA,150);
@@ -171,13 +171,13 @@ void goStraight(int direction1, int speed1)
 void turnLeft()
 {
   motionA(forwardA, 90); // motorA left wheel goes half speed
-  motionB(forwardB, 180); // motorB right wheel goes full speed to initiate left turn
+  motionB(forwardB, 255); // motorB right wheel goes full speed to initiate left turn
   
 }
 
 void turnRight()
 {
-  motionA(forwardA, 180); // motorA left wheel goes full speed to initiate right turn
+  motionA(forwardA, 255); // motorA left wheel goes full speed to initiate right turn
   motionB(forwardB, 90); // motorB right wheel goes half speed
 
 }
