@@ -1,7 +1,8 @@
+
 //Fernando Perez Zavala, Jacob Navarro 
 //Tracking Car Project
 
-// Sensors to implement: Color Sensor, Tracking sensor, and IR Obj
+// Sensors to implement: Color Sensor, Tracking sensor, and IR Object Detector
 
 
 #define PWM_A_Pin 9 // PWM A
@@ -14,8 +15,9 @@
 #define s1 5
 #define s2 6
 #define s3 10
-#define out 12
+#define out 12  
 
+// initializing tracking pins as numerical input ports
 const int trackingPin1 = 7;
 const int trackingPin2 = 8; 
 
@@ -32,7 +34,7 @@ const bool forwardA = HIGH; // to indicate HIGH as a forward motion for motor A
 const bool backwardA = LOW; // to indicate LOW as a backward motion for motor A
 
 const bool forwardB = HIGH; // to indicate HIGH as a forward motion for motor B
-const bool backwardB = LOW; // to indicate HIGH as a backward motion for motor B
+const bool backwardB = LOW; // to indicate LOW as a backward motion for motor B
 
 int frequencyR = 0;
 int frequencyG = 0;
@@ -69,9 +71,10 @@ void setup() {
  
 }
 
+
 void loop() 
 {
-  
+
   boolean val1 = digitalRead(trackingPin1); // Left Motor
   boolean val2 = digitalRead(trackingPin2); // Right Motor
 
@@ -143,7 +146,7 @@ void turnRight()
 
 void stopMotion()
 {
-    // set both channel PWM pins to 0
+    // set both channel PWM pins to 0 which will stop both motors
     analogWrite(PWM_A_Pin, 0);
     analogWrite(PWM_B_Pin, 0);  
      
