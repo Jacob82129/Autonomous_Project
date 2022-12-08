@@ -2,7 +2,7 @@
 //Fernando Perez Zavala, Jacob Navarro 
 //Tracking Car Project
 
-// Sensors to implement: Color Sensor, Tracking sensor, and IR Object Detector
+// Sensors to implement: Color Sensor, Tracking sensor, and IR Object Detector, and Buzzer
 
 
 #define PWM_A_Pin 9 // PWM A
@@ -87,12 +87,12 @@ void loop()
   if(val1 == HIGH && val2 == HIGH && (straightFlag == false))
   {
     goStraight(forwardA, 250);
-    straightFlag == true;
+    straightFlag == true; 
   }
   else if(val1 == LOW && val2 == HIGH && (leftFlag == false))
   {
     turnLeft();
-    leftFlag == true;  
+    leftFlag == true;
   }
   else if(val1 == HIGH && val2 == LOW && (rightFlag == false))
   {
